@@ -11,10 +11,13 @@ public class NeighborCell implements IUpdateableCell, ILivingCell {
 	CellImpl _cell;
 
 	
-	public NeighborCell(int x, int y, int rowLength) {
-		_cell = new CellImpl(x, y, rowLength);
+	public NeighborCell(int x, int y) {
+		_cell = new CellImpl(x, y);
 	}
-	
+
+	public NeighborCell(Point p) {
+		_cell = new CellImpl(p);
+	}
 	
 	/* (non-Javadoc)
 	 * @see ex1.LivingCell#getStatus(int)

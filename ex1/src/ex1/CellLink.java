@@ -8,11 +8,11 @@ package ex1;
  *
  */
 public class CellLink implements ILivingCell {
-	CellImpl _cellLink;
+	ILivingCell _cellLink;
 
 	
-	public CellLink(CellImpl c){
-		_cellLink = c;
+	public CellLink(ILivingCell cell){
+		_cellLink = cell;
 	}
 	/* (non-Javadoc)
 	 * @see ex1.Living#getStatus(int)

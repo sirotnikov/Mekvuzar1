@@ -7,8 +7,8 @@ package ex1;
  * @author Dima
  *
  */
-public class CellImpl implements ILivingCell, IUpdateableCell {
-	final Position _position;
+public class CellImpl implements ILivingCell, IUpdateableCell, IPoint {
+	final Point _point;
 	int _currentGeneration;
 	boolean[] _lastTwoStates;
 
@@ -17,10 +17,17 @@ public class CellImpl implements ILivingCell, IUpdateableCell {
 	 */
 	
 	public CellImpl(int x, int y){
-		_position = new Position(x, y);
+		_point = new Point(x, y);
+		_currentGeneration = -1;
 		_lastTwoStates = new boolean[2];
 	}
 	
+	public CellImpl(Point p) {
+		_point = p;
+		_currentGeneration = -1;
+		_lastTwoStates = new boolean[2];
+	}
+
 	public int getGeneration(){
 		return _currentGeneration;
 	}
@@ -37,7 +44,7 @@ public class CellImpl implements ILivingCell, IUpdateableCell {
 
 	@Override
 	public int hashCode() {
-		return _position.hashCode();
+		return _point.hashCode();
 	}
 	
 	@Override
@@ -45,7 +52,7 @@ public class CellImpl implements ILivingCell, IUpdateableCell {
 		if (! (obj instanceof CellImpl))
 			return false;
 		CellImpl rts = (CellImpl) obj;
-		return (_position == rts._position);
+		return (_point == rts._point);
 	}
 	
 	public void update(int generation, boolean status) throws CellException{
@@ -54,6 +61,16 @@ public class CellImpl implements ILivingCell, IUpdateableCell {
 		
 		_currentGeneration = generation;
 		_lastTwoStates[generation] = status;;
+	}
+
+	@Override
+	public int getX() {
+		return _point.getX();
+	}
+
+	@Override
+	public int getY() {
+		return _point.getY();
 	}
 	
 }

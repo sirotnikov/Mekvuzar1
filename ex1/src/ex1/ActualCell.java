@@ -1,7 +1,7 @@
 package ex1;
 
 
-public class ActualCell implements ILivingCell {
+public class ActualCell implements ILivingCell, IPoint {
 	final CellImpl _cell;
 	NeighborArray<ILivingCell> _nearbyCells;
 
@@ -48,6 +48,14 @@ public class ActualCell implements ILivingCell {
 	 */
 	private boolean stayAliveConditions(boolean alive, int sumLiving) {
 		return alive && (sumLiving == 2 || sumLiving == 3);
+	}
+	@Override
+	public int getX() {
+		return _cell.getX();
+	}
+	@Override
+	public int getY() {
+		return _cell.getY();
 	}
 
 }
