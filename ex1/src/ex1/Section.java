@@ -15,5 +15,11 @@ public class Section {
 	int _yOffset;
 	int _totalBoardWidth;
 	int _totalBoardHeight;
+	public Section(int height,int width){
+		_cellsArray = new Cell[height][width];
+		_width = width;
+		_height = height;
+		
+	}
 
 }
