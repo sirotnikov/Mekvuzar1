@@ -15,7 +15,7 @@ public class Section {
 	HashMap<Point,ActualCell> _cellsMap;
 	HashSet<ActualCell> _cellsSet;
 	HashMap<Point,ILivingCell> _neighborsMap;
-	LinkCellFactory _linkMaker;
+	CellLinkFactory _linkMaker;
 	int _width;
 	int _height;
 	int _xOffset;
@@ -29,7 +29,7 @@ public class Section {
 		_cellsMap = new HashMap<Point,ActualCell>();	
 		_cellsSet = new HashSet<ActualCell>();
 		_neighborsMap = new HashMap<Point,ILivingCell>();
-		_linkMaker = new LinkCellFactory(_neighborsMap);
+		_linkMaker = new CellLinkFactory(_neighborsMap);
 		
 		initCells();
 		
