@@ -37,6 +37,19 @@ public class CellImpl implements ILivingCell, IUpdateableCell {
 		return _lastTwoGenerations.get(generation);
 	}
 
+	@Override
+	public int hashCode() {
+		return _position.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (! (obj instanceof CellImpl))
+			return false;
+		CellImpl rts = (CellImpl) obj;
+		return (_position == rts._position);
+	}
+	
 	public void update(int generation, boolean status) throws CellException{
 		if (generation != _currentGeneration + 1)
 			throw new UnknownException();
