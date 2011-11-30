@@ -24,6 +24,10 @@ public class CellImpl implements ILivingCell, IUpdateableCell {
 		_lastTwoGenerations = new HashMap<Integer,Boolean>();
 	}
 	
+	public int getGeneration(){
+		return _currentGeneration;
+	}
+	
 	@Override
 	public boolean getStatus(int generation) throws CellException {
 		if (generation > _currentGeneration)
