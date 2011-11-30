@@ -8,5 +8,5 @@ package ex1;
  *
  */
 public interface Living {
-	public int getStatus(int generation) throws CellException;
+	public boolean getStatus(int generation) throws CellException;
 }

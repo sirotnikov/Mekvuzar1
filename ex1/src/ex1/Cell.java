@@ -10,15 +10,22 @@ import java.util.HashMap;
  *
  */
 public class Cell implements Living {
-	Position _position;
+	final Position _position;
 	int _currentGeneration;
-	HashMap<Integer, Integer> _lastTwoGenerations;
+	HashMap<Integer, Boolean> _lastTwoGenerations;
 
 	/* (non-Javadoc)
 	 * @see ex1.Living#getStatus(int)
 	 */
+	
+	public Cell(int x, int y, int rowLength){
+		_position = new Position(x, y, rowLength);
+		_currentGeneration = -1;
+		_lastTwoGenerations = new HashMap<Integer,Boolean>();
+	}
+	
 	@Override
-	public int getStatus(int generation) throws CellException {
+	public boolean getStatus(int generation) throws CellException {
 		if (generation > _currentGeneration)
 			throw new CellNotYetReady();
 		if (generation < _currentGeneration - 1)
@@ -30,6 +37,13 @@ public class Cell implements Living {
 		return _lastTwoGenerations.get(generation);
 	}
 
-	public int update(int generation, boolean status)
+	public void update(int generation, boolean status) throws CellException{
+		if (generation != _currentGeneration + 1)
+			throw new CellUnknown();
+		
+		_currentGeneration = generation;
+		_lastTwoGenerations.put(generation, status);
+		_lastTwoGenerations.remove(generation - 2);
+	}
 	
 }
