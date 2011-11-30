@@ -1,0 +1,13 @@
+#Life 1.05
+#D Acorn
+#D The most vigorously growing 7-cell
+#D "methuselah" pattern.  See also RABBITS.
+#N
+#P -1 0
+.*
+***
+.*
+##P 2 2
+#.*
+#***
+#.*
