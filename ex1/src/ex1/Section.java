@@ -16,6 +16,7 @@ public class Section {
 	HashSet<ActualCell> _cellsSet;
 	HashMap<Point,ILivingCell> _neighborsMap;
 	CellLinkFactory _linkMaker;
+	
 	int _width;
 	int _height;
 	int _xOffset;
@@ -23,6 +24,7 @@ public class Section {
 
 	int _totalBoardWidth;
 	int _totalBoardHeight;
+	
 	public Section(int height,int width){
 		_width = width;
 		_height = height;
