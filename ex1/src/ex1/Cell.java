@@ -9,7 +9,7 @@ import java.util.HashMap;
  * @author Dima
  *
  */
-public class Cell implements Living {
+public class Cell implements ILivingCell, IUpdateableCell {
 	final Position _position;
 	int _currentGeneration;
 	HashMap<Integer, Boolean> _lastTwoGenerations;
@@ -27,19 +27,19 @@ public class Cell implements Living {
 	@Override
 	public boolean getStatus(int generation) throws CellException {
 		if (generation > _currentGeneration)
-			throw new CellNotYetReady();
+			throw new NotYetReadyException();
 		if (generation < _currentGeneration - 1)
-			throw new CellTooOld();
+			throw new TooOldException();
 		
 		if (! (_lastTwoGenerations.containsKey(generation)))
-			throw new CellUnknown();
+			throw new UnknownException();
 		
 		return _lastTwoGenerations.get(generation);
 	}
 
 	public void update(int generation, boolean status) throws CellException{
 		if (generation != _currentGeneration + 1)
-			throw new CellUnknown();
+			throw new UnknownException();
 		
 		_currentGeneration = generation;
 		_lastTwoGenerations.put(generation, status);
