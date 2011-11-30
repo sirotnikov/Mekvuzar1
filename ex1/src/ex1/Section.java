@@ -8,7 +8,7 @@ package ex1;
  *
  */
 public class Section {
-	Cell[][] _cellsArray;
+	CellImpl[][] _cellsArray;
 	int _width;
 	int _height;
 	int _xOffset;

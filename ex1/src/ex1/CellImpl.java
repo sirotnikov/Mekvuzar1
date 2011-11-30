@@ -9,7 +9,7 @@ import java.util.HashMap;
  * @author Dima
  *
  */
-public class Cell implements ILivingCell, IUpdateableCell {
+public class CellImpl implements ILivingCell, IUpdateableCell {
 	final Position _position;
 	int _currentGeneration;
 	HashMap<Integer, Boolean> _lastTwoGenerations;
@@ -18,7 +18,7 @@ public class Cell implements ILivingCell, IUpdateableCell {
 	 * @see ex1.Living#getStatus(int)
 	 */
 	
-	public Cell(int x, int y, int rowLength){
+	public CellImpl(int x, int y, int rowLength){
 		_position = new Position(x, y, rowLength);
 		_currentGeneration = -1;
 		_lastTwoGenerations = new HashMap<Integer,Boolean>();
