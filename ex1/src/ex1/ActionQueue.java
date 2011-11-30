@@ -15,9 +15,9 @@ class ActionQueue{
 		boolean success =  actionList.add(newAction);
 		return success;
 	}
-	public synchronized Action dequeue(){
+	public synchronized Action dequeue() throws ActionqueueException{
 		if (actionList.isEmpty() == true){
-			throw  new ActionqueueException();
+			throw new ActionqueueException();
 		}
 		return (Action)actionList.get(0);
 	}
