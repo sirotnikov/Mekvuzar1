@@ -7,7 +7,7 @@ package ex1;
  * @author Dima
  *
  */
-public class CellUnknown extends CellException {
+public class UnknownException extends CellException {
 
 	/**
 	 * 

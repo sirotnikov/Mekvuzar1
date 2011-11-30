@@ -1,6 +1,6 @@
 package ex1;
 
-public class CellNotYetReady extends CellException {
+public class NotYetReadyException extends CellException {
 
 	/**
 	 * 

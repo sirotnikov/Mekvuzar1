@@ -7,6 +7,6 @@ package ex1;
  * @author Dima
  *
  */
-public interface Living {
+public interface ILivingCell {
 	public boolean getStatus(int generation) throws CellException;
 }

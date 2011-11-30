@@ -6,7 +6,7 @@ public class ParallelGameOfLife implements GameOfLife {
 			int generations) {
 		// init the field -> copy the field to the local array
 				boolean[][] input=new boolean[initalField.length][];
-		return null;
+		return input;
 	}
 
 }

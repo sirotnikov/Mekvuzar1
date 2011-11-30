@@ -7,7 +7,7 @@ package ex1;
  * @author Dima
  *
  */
-public class CellTooOld extends CellException {
+public class TooOldException extends CellException {
 
 	/**
 	 * 
