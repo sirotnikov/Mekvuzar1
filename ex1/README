@@ -1,0 +1,25 @@
+This archive is an Eclipse project for writing the parallel version of GameOfLife. 
+The project contains a working serial implementation, as well as the framework 
+which evaluates the correctness of the parallel implementation. 
+
+You should implement method "invoke" in the class ParallelGameOfLife.java. 
+It is invoked with the parameters as provided to the program in the command line, and its results
+are compared with those of the serial version. If the comparison succeeds -> your parallel implementation
+works correctly. Otherwise your implementation is incorrect. 
+The data structures in the evaluation framework SHOULD NOT be considered as a hint
+for the way to implement the parallel version. 
+
+Two test files of inital pattern are provided. These files are in Life1.05 format, and there are plenty of verious files
+can be found all over the internet. In particular, you can download many of them from the site:
+
+http://www.radicaleye.com/lifepage/patterns/contents.html
+
+For convenience,  a jar file GameOfLife.jar is provided,  which allows to view the game field and its development 
+from generation to generation given some initial pattern. I do not guarantee the correctness of the implementation. 
+Furthermore, large fields are likely to be distorted since the size of the field plays a crucial role.
+To invoke it issue the command: java -jar GameOfLife.jar. It can read all the patter files in Life1.05 formats, but it 
+ignores the inital coordinates, so beware of consequencies.
+
+To summarize, the program correctness is validated solely by comparing the output with that 
+of the provided serial implementation.
+
