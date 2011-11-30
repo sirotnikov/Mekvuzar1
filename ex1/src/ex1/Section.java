@@ -13,7 +13,7 @@ public class Section {
 	int _height;
 	int _xOffset;
 	int _yOffset;
-	int _totalBoardWidth;
-	int _totalBoardHeight;
 
+	
+	
 }

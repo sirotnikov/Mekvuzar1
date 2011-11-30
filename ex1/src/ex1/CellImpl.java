@@ -3,8 +3,6 @@
  */
 package ex1;
 
-import java.util.HashMap;
-
 /**
  * @author Dima
  *
@@ -12,16 +10,15 @@ import java.util.HashMap;
 public class CellImpl implements ILivingCell, IUpdateableCell {
 	final Position _position;
 	int _currentGeneration;
-	HashMap<Integer, Boolean> _lastTwoGenerations;
+	boolean[] _lastTwoStates;
 
 	/* (non-Javadoc)
 	 * @see ex1.Living#getStatus(int)
 	 */
 	
-	public CellImpl(int x, int y, int rowLength){
-		_position = new Position(x, y, rowLength);
-		_currentGeneration = -1;
-		_lastTwoGenerations = new HashMap<Integer,Boolean>();
+	public CellImpl(int x, int y){
+		_position = new Position(x, y);
+		_lastTwoStates = new boolean[2];
 	}
 	
 	public int getGeneration(){
@@ -35,10 +32,7 @@ public class CellImpl implements ILivingCell, IUpdateableCell {
 		if (generation < _currentGeneration - 1)
 			throw new TooOldException();
 		
-		if (! (_lastTwoGenerations.containsKey(generation)))
-			throw new UnknownException();
-		
-		return _lastTwoGenerations.get(generation);
+		return _lastTwoStates[generation % 2];
 	}
 
 	@Override
@@ -59,8 +53,7 @@ public class CellImpl implements ILivingCell, IUpdateableCell {
 			throw new UnknownException();
 		
 		_currentGeneration = generation;
-		_lastTwoGenerations.put(generation, status);
-		_lastTwoGenerations.remove(generation - 2);
+		_lastTwoStates[generation] = status;;
 	}
 	
 }

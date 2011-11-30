@@ -5,10 +5,10 @@ public class Position {
 	final int _y;
 	final int _hash;
 	
-	Position(int x, int y, int rowLength){
+	Position(int x, int y){
 		_x = x;
 		_y = y;
-		_hash = y * rowLength + x;
+		_hash = (y * ParallelBoard._rowLength) + x;
 	}
 	
 	public int getX(){
@@ -21,7 +21,6 @@ public class Position {
 	
 	@Override
 	public int hashCode() {
-		// TODO Auto-generated method stub
 		return _hash;
 	}
 	

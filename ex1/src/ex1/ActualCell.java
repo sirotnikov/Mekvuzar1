@@ -1,34 +1,32 @@
 package ex1;
 
-import java.util.Iterator;
 
 public class ActualCell implements ILivingCell {
 	final CellImpl _cell;
 	NeighborArray<ILivingCell> _nearbyCells;
 
 	
-	public ActualCell(int x, int y, int rowLength){
-		_cell = new CellImpl(x, y, rowLength);
+	public ActualCell(int x, int y){
+		_cell = new CellImpl(x, y);
+		_nearbyCells = new NeighborArray<ILivingCell>();
 	}
 	@Override
 	public boolean getStatus(int generation) throws CellException {
 		return _cell.getStatus(generation);
 	}
 	
-	public void setNeighbors(NeighborArray<ILivingCell> nearbyCells){
-		_nearbyCells = nearbyCells;
+	public void setNeighbor(Directions dir, ILivingCell cell){
+		_nearbyCells.put(dir, cell);
 	}
 	
 	public void advanceGeneration() throws CellException{
-		Iterator<ILivingCell> iterator = _nearbyCells.iterator();
 		int myGeneration = _cell.getGeneration();
 		boolean alive = _cell.getStatus(myGeneration);
 		
 		int sumLiving = 0;
 		
-		while(iterator.hasNext()){
-			//this can throw, and then we need to advance
-			if (iterator.next().getStatus(myGeneration))
+		for(ILivingCell cell : _nearbyCells){
+			if (cell.getStatus(myGeneration))
 				sumLiving++;
 		}
 		
