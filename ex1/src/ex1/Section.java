@@ -51,6 +51,7 @@ public class Section {
 	
 	private void initNeighbors() {
 		for (ActualCell cell : _cellsSet){
+			
 			int x = cell.getX();
 			int y = cell.getY();
 			boolean withinBoard = ((x > _xOffset) && (y > _yOffset) && 
@@ -61,32 +62,31 @@ public class Section {
 			}
 							
 			if (y > 0){
-				//setN
+				setNeighbor(cell, Directions.NORTH, withinBoard);
 			}
 			
 			if (y > 0 && x < _totalBoardWidth - 1){
-				//setNE
+				setNeighbor(cell, Directions.NORTH_EAST, withinBoard);
 			}
 			
 			if (x > 0){
-				//setW
+				setNeighbor(cell, Directions.WEST, withinBoard);
 			}
 			
 			if (x < _totalBoardWidth - 1){
-				//setE
+				setNeighbor(cell, Directions.EAST, withinBoard);
 			}
 			
-			
 			if(y < _totalBoardHeight - 1 && x <_totalBoardWidth - 1){
-				//setSE
+				setNeighbor(cell, Directions.SOUTH_EAST, withinBoard);
 			}
 			
 			if(y < _totalBoardHeight - 1){
-				//setS
+				setNeighbor(cell, Directions.SOUTH, withinBoard);
 			}
 			
 			if(y < _totalBoardHeight -1 && x > 0){
-				//setSW
+				setNeighbor(cell, Directions.SOUTH_WEST, withinBoard);
 			}
 			
 		}
