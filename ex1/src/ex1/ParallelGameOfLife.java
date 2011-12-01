@@ -8,7 +8,7 @@ public class ParallelGameOfLife implements GameOfLife {
 				boolean[][] input=new boolean[initalField.length][];
 		
 		ParallelBoard pb = new ParallelBoard(initalField.length, initalField[0].length, 
-				hSplit, vSplit, initalField);
+				hSplit, vSplit, initalField, generations);
 		
 		return null;
 	}

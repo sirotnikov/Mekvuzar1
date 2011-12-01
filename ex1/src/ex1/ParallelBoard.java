@@ -14,18 +14,20 @@ public class ParallelBoard {
 	public static int _vSections;
 	public static int _boardWidth;
 	public static int _boardHeight;	
+	public static int _generations;
 	
 	public static int getBoardWidth(){
 		return _boardWidth;
 	}
 
-	ParallelBoard(int boardHeight,int boardWidth,int hSections,int vSections,boolean initalBoard[][]){
+	ParallelBoard(int boardHeight,int boardWidth,int hSections,int vSections,boolean initalBoard[][], int generations){
 		
 		_sectionsArray = new Section[hSections][vSections];
 		_boardHeight = boardHeight;
 		_boardWidth = boardWidth;
 		_hSections = hSections;
 		_vSections = vSections;
+		_generations = generations;
 		
 		int normalSecHgtSize = _boardHeight / _hSections;
 		int normalSecWdtSize = _boardWidth / _vSections;
@@ -42,6 +44,23 @@ public class ParallelBoard {
 			}	
 		
 	}
+	
+	
+	/**
+	 * TODO: Add a new class which inherits Threads
+	 * 		 Each such thread will be constructed with a ptr to a Section
+	 * 		 And will do "section.solve();"
+	 */
+	
+	
+	
+	/**
+	 * 
+	 * @param sourceBoard
+	 * @param targetBoard
+	 * @return
+	 */
+	
 	
 	public boolean sectionCopy(CellImpl sourceBoard,CellImpl targetBoard[][]){
 		return true;

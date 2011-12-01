@@ -5,6 +5,7 @@ package ex1;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 
 /**
  * @author Dima
@@ -13,9 +14,39 @@ import java.util.HashSet;
 public class Section {
 
 	HashMap<Point,ActualCell> _cellsMap;
-	HashSet<ActualCell> _cellsSet;
-	HashMap<Point,ILivingCell> _neighborsMap;
+	HashMap<Point,ILivingCell> _neighborCellCache;
+	
+	SynchronizedActionQueue _actions;
+	
+	/**
+	 * TODO: add function which allows inserting into _actions
+	 * TODO: add function which traverses actions:
+	 * 
+	 * 	while(!_actions.isEmpty()){
+	 *		Action a = _actions.pop()
+	 *		a.perform(); 	//for this we must have Action
+	 *						//know about _neighborCellCache;
+	 *						//Maybe, ActionFactory? 
+	 *	} 	
+	 */
+	
+	LinkedList<ActualCell> _cellsActive;
+	LinkedList<ActualCell> _cellsStuck;
+	
 	CellLinkFactory _linkMaker;
+	/**
+	 * TODO: create ActualCellFactory
+	 * it will hold for itself
+	 * ptr->initalBoard
+	 * ptr->cellsWaiting
+	 * ptr->cellsStuck
+	 * totalBoardWidth (maybe - we can't have this *public* *static*
+	 * 
+	 * these will be copied into the cell.
+	 * this info will sit inside each ActualCel, allowing the cell
+	 * to handle itself: move itself on fail and or success.
+	 */
+
 	
 	int _width;
 	int _height;
@@ -33,17 +64,23 @@ public class Section {
 		_yOffset = yOffset;
 		_totalBoardHeight = boardHeight;
 		_totalBoardWidth = boardWidth;
-		
+
+
 		_cellsMap = new HashMap<Point,ActualCell>();	
-		_cellsSet = new HashSet<ActualCell>();
-		_neighborsMap = new HashMap<Point,ILivingCell>();
-		_linkMaker = new CellLinkFactory(_neighborsMap);
+		_neighborCellCache = new HashMap<Point,ILivingCell>();
+		_linkMaker = new CellLinkFactory(_neighborCellCache);
 		
 		initCells(initalBoard);
 		
-		//this should be done by threads
+	}
+	
+	public void Solve(){
+		//TODO: this should be run by threads
+		
 		initNeighbors();
 	}
+	
+	
 	/**
 	 * 
 	 */
@@ -51,18 +88,18 @@ public class Section {
 		for (int y = _yOffset; y < _yOffset + _height; y++)
 			for (int x = _xOffset; x < _xOffset + _width; x++){
 				ActualCell cell = new ActualCell(x, y, initalBoard[y][x]);
-				_cellsSet.add(cell);
 				_cellsMap.put(new Point(x,y), cell);
 			}
 	}
 	
 	private void initNeighbors() {
-		for (ActualCell cell : _cellsSet){
+		for (ActualCell cell : _cellsMap.values()){
 			
 			int x = cell.getX();
 			int y = cell.getY();
-			boolean withinBoard = ((x > _xOffset) && (y > _yOffset) && 
-					(x < _xOffset + _width - 1) && (y < _yOffset + _width - 1)); 
+			
+			System.out.print("("+x+","+y+")");
+			boolean withinBoard = checkWithinBoundries(x, y); 
 			
 			if(y > 0 && x > 0){
 				setNeighbor(cell, Directions.NORTH_WEST, withinBoard);
@@ -97,6 +134,15 @@ public class Section {
 			}
 			
 		}
+	}
+	/**
+	 * @param x
+	 * @param y
+	 * @return true/false - is the (x,y) not  
+	 */
+	private boolean checkWithinBoundries(int x, int y) {
+		return (x > _xOffset) && (y > _yOffset) && 
+				(x < _xOffset + _width - 1) && (y < _yOffset + _width - 1);
 	}
 	
 	/**
