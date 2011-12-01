@@ -7,7 +7,7 @@ package ex1;
  * @author Dima
  *
  */
-public class UnknownException extends CellException {
+public class WrongGenerationException extends CellException {
 
 	/**
 	 * 

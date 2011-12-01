@@ -57,10 +57,15 @@ public class CellImpl implements ILivingCell, IUpdateableCell, IPoint {
 	
 	public void update(int generation, boolean status) throws CellException{
 		if (generation != _currentGeneration + 1)
-			throw new UnknownException();
+			throw new WrongGenerationException();
 		
 		_currentGeneration = generation;
-		_lastTwoStates[generation % 2] = status;;
+		_lastTwoStates[generation % 2] = status;
+	}
+	
+	public void advance(boolean status){
+		_currentGeneration++;
+		_lastTwoStates[_currentGeneration % 2] = status;
 	}
 
 	@Override
