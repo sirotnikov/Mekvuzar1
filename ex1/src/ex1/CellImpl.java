@@ -60,7 +60,7 @@ public class CellImpl implements ILivingCell, IUpdateableCell, IPoint {
 			throw new UnknownException();
 		
 		_currentGeneration = generation;
-		_lastTwoStates[generation] = status;;
+		_lastTwoStates[generation % 2] = status;;
 	}
 
 	@Override

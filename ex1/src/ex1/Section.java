@@ -25,15 +25,21 @@ public class Section {
 	int _totalBoardWidth;
 	int _totalBoardHeight;
 	
-	public Section(int height,int width){
+	public Section(int height,int width, int xOffset, int yOffset,
+			int boardHeight, int boardWidth, boolean initalBoard[][]){
 		_width = width;
 		_height = height;
+		_xOffset = xOffset;
+		_yOffset = yOffset;
+		_totalBoardHeight = boardHeight;
+		_totalBoardWidth = boardWidth;
+		
 		_cellsMap = new HashMap<Point,ActualCell>();	
 		_cellsSet = new HashSet<ActualCell>();
 		_neighborsMap = new HashMap<Point,ILivingCell>();
 		_linkMaker = new CellLinkFactory(_neighborsMap);
 		
-		initCells();
+		initCells(initalBoard);
 		
 		//this should be done by threads
 		initNeighbors();
@@ -41,10 +47,10 @@ public class Section {
 	/**
 	 * 
 	 */
-	private void initCells() {
+	private void initCells(boolean initalBoard[][]) {
 		for (int y = _yOffset; y < _yOffset + _height; y++)
 			for (int x = _xOffset; x < _xOffset + _width; x++){
-				ActualCell cell = new ActualCell(x, y); 
+				ActualCell cell = new ActualCell(x, y, initalBoard[y][x]);
 				_cellsSet.add(cell);
 				_cellsMap.put(new Point(x,y), cell);
 			}
@@ -116,29 +122,11 @@ public class Section {
 	public int getHeight(){
 		return _height;
 	}
-	public int getXOffset(){
-		return _xOffset;
-	}
-	public int getYOffset(){
-		return _yOffset;
-	}
-	public int getTotalBoardWidth(){
-		return _totalBoardWidth;
-	}
-	public int getTotalBoardHeight(){
-		return _totalBoardHeight;
-	}
 	public void setWidth(int newWidth){
 		_width = newWidth;
 	}
 	public void setHeight(int newHeight){
 		_height = newHeight;
-	}
-	public void setXOffset(int newXOffset){
-		_xOffset = newXOffset;
-	}
-	public void setYOffset(int newYoffset){
-		_yOffset = newYoffset;
 	}
 	public void setTotalBoardWidth(int newTotalBoardWidth){
 		_totalBoardWidth = newTotalBoardWidth;

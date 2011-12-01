@@ -19,7 +19,7 @@ public class ParallelBoard {
 		return _boardWidth;
 	}
 
-	ParallelBoard(int boardHeight,int boardWidth,int hSections,int vSections,boolean serialBoard[][]){
+	ParallelBoard(int boardHeight,int boardWidth,int hSections,int vSections,boolean initalBoard[][]){
 		
 		_sectionsArray = new Section[hSections][vSections];
 		_boardHeight = boardHeight;
@@ -31,30 +31,18 @@ public class ParallelBoard {
 		int normalSecWdtSize = _boardWidth / _vSections;
 		int lastSecHgtExtra = _boardHeight % _hSections;
 		int lastSecWdtExtra = _boardWidth % _vSections;
+		
 		for(int i=0; i < _hSections;i++)
 			for(int j=0; j< _vSections;j++){
-				_sectionsArray[i][j].setTotalBoardHeight(_boardHeight);
-				_sectionsArray[i][j].setTotalBoardWidth(_boardWidth);
-				_sectionsArray[i][j].setXOffset(i*normalSecHgtSize);
-				_sectionsArray[i][j].setYOffset(normalSecWdtSize);
-				if(i != hSections-1){
-					_sectionsArray[i][j].setHeight(normalSecHgtSize); 
-				}
-				else
-				{
-					_sectionsArray[i][j].setHeight(lastSecHgtExtra); 
-				}
-				if(i != hSections-1){
-					_sectionsArray[i][j].setWidth(normalSecWdtSize);
-				}
-				else
-				{
-					_sectionsArray[i][j].setWidth(lastSecWdtExtra);
-				}
-			}
-		
+				_sectionsArray[j][i] = new Section(
+						normalSecHgtSize + ((i == _hSections - 1) ? lastSecHgtExtra : 0), 
+						normalSecWdtSize + ((i == _vSections - 1) ? lastSecWdtExtra : 0), 
+						i * normalSecWdtSize, j * normalSecHgtSize,
+						_boardHeight, _boardWidth, initalBoard);
+			}	
 		
 	}
+	
 	public boolean sectionCopy(CellImpl sourceBoard,CellImpl targetBoard[][]){
 		return true;
 	}

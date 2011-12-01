@@ -6,8 +6,11 @@ public class ActualCell implements ILivingCell, IPoint {
 	NeighborArray<ILivingCell> _nearbyCells;
 
 	
-	public ActualCell(int x, int y){
+	public ActualCell(int x, int y, boolean status){
 		_cell = new CellImpl(x, y);
+		try {
+			_cell.update(0, status);
+		} catch (CellException e) {}
 		_nearbyCells = new NeighborArray<ILivingCell>();
 	}
 	@Override
