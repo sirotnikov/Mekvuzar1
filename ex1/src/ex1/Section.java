@@ -116,24 +116,4 @@ public class Section {
 		c.setNeighbor(direction, neighbor);
 	}
 	
-	public int getWidth(){
-		return _width;
-	}
-	public int getHeight(){
-		return _height;
-	}
-	public void setWidth(int newWidth){
-		_width = newWidth;
-	}
-	public void setHeight(int newHeight){
-		_height = newHeight;
-	}
-	public void setTotalBoardWidth(int newTotalBoardWidth){
-		_totalBoardWidth = newTotalBoardWidth;
-	}
-	public void setTotalBoardHeight(int newTotalBoardHeight){
-		 _totalBoardHeight = newTotalBoardHeight;
-	}
-
-	
 }
