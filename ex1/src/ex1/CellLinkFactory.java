@@ -10,9 +10,9 @@ import java.util.HashMap;
  *
  */
 public class CellLinkFactory {
-	HashMap<Point, ILivingCell> _targetMap;
+	HashMap<Point, NeighborCell> _targetMap;
 
-	public CellLinkFactory(HashMap<Point, ILivingCell> neighborsMap) {
+	public CellLinkFactory(HashMap<Point, NeighborCell> neighborsMap) {
 		_targetMap = neighborsMap;
 	}
 
