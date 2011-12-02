@@ -22,6 +22,11 @@ public class CellImpl implements ILivingCell, IUpdateableCell, IPoint {
 		_lastTwoStates = new boolean[2];
 	}
 	
+	@Override
+	public String toString() {
+		return new String ("(" + _point.getX() + "," + _point.getY() + ")");
+	}
+	
 	public CellImpl(Point p) {
 		_point = p;
 		_currentGeneration = -1;
@@ -63,9 +68,10 @@ public class CellImpl implements ILivingCell, IUpdateableCell, IPoint {
 		_lastTwoStates[generation % 2] = status;
 	}
 	
-	public void advance(boolean status){
+	public int advance(boolean status){
 		_currentGeneration++;
 		_lastTwoStates[_currentGeneration % 2] = status;
+		return _currentGeneration;
 	}
 
 	@Override
