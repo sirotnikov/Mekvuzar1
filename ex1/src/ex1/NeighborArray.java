@@ -1,17 +1,22 @@
 package ex1;
 
 import java.util.EnumMap;
+import java.util.HashSet;
 import java.util.Iterator;
+
 
 public class NeighborArray<T> implements Iterable<T>{
 	EnumMap<Directions, T> _map;
+	HashSet<T> _set;
 	
 	public NeighborArray() {
 		_map = new EnumMap<Directions,T>(Directions.class);
+		_set = new HashSet<T>();
 	}
 	
 	public void put(Directions dir, T value){
 		_map.put(dir, value);
+		_set.add(value);
 	}
 	
 	public T get(Directions dir){
@@ -26,6 +31,10 @@ public class NeighborArray<T> implements Iterable<T>{
 
 	@Override
 	public Iterator<T> iterator() {
-		return _map.values().iterator();
+		return _set.iterator();
+	}
+
+	public boolean isEmpty() {
+		return _set.isEmpty();
 	}
 }
