@@ -1,11 +1,11 @@
 package ex1;
 
-public class Point implements IPoint {
+public class Pos implements IPoint {
 	 final int _x;
 	 final int _y;
 	 public static int _rowLength;
 	
-	Point(int x, int y){
+	Pos(int x, int y){
 		if (x < 0 || y < 0)
 			throw new IndexOutOfBoundsException("Point can only be positive: ("+x+","+y+")");
 		_x = x;
@@ -16,10 +16,15 @@ public class Point implements IPoint {
 	public String toString() {
 		return new String("(" + _x + "," + _y + ")");
 	}
+	/**
+	 * @return int describing the X position of the point
+	 */
 	public int getX(){
 		return _x;
 	}
-	
+	/**
+	 * @return int describing the Y position of the point
+	 */	
 	public int getY(){
 		return _y;
 	}
@@ -31,9 +36,9 @@ public class Point implements IPoint {
 	
 	@Override
 	public boolean equals(Object obj) {
-		if (! (obj instanceof Point))
+		if (! (obj instanceof Pos))
 			return false;
-		Point rts = (Point) obj;
+		Pos rts = (Pos) obj;
 		return ((_x == rts._x) && (_y == rts._y));
 	}
 }

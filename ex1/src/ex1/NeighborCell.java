@@ -15,7 +15,7 @@ public class NeighborCell implements IUpdateableCell, ILivingCell {
 		_cell = new CellImpl(x, y);
 	}
 
-	public NeighborCell(Point p) {
+	public NeighborCell(Pos p) {
 		_cell = new CellImpl(p);
 	}
 	

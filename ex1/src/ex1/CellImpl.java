@@ -8,7 +8,7 @@ package ex1;
  *
  */
 public class CellImpl implements ILivingCell, IUpdateableCell, IPoint {
-	final Point _point;
+	final Pos _point;
 	int _currentGeneration;
 	boolean[] _lastTwoStates;
 
@@ -17,7 +17,7 @@ public class CellImpl implements ILivingCell, IUpdateableCell, IPoint {
 	 */
 	
 	public CellImpl(int x, int y){
-		_point = new Point(x, y);
+		_point = new Pos(x, y);
 		_currentGeneration = -1;
 		_lastTwoStates = new boolean[2];
 	}
@@ -27,7 +27,7 @@ public class CellImpl implements ILivingCell, IUpdateableCell, IPoint {
 		return new String ("(" + _point.getX() + "," + _point.getY() + ")");
 	}
 	
-	public CellImpl(Point p) {
+	public CellImpl(Pos p) {
 		_point = p;
 		_currentGeneration = -1;
 		_lastTwoStates = new boolean[2];

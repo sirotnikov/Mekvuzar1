@@ -25,7 +25,7 @@ public class ParallelBoard {
 		_hSections = hSections;
 		_vSections = vSections;
 		_generations = generations;
-		Point._rowLength = _boardWidth;
+		Pos._rowLength = _boardWidth;
 
 		_sectionsArray = new Section[_vSections][_hSections];
 		initSections(initalBoard);

@@ -10,14 +10,14 @@ import java.util.HashMap;
  *
  */
 public class CellLinkFactory {
-	HashMap<Point, NeighborCell> _targetMap;
+	HashMap<Pos, NeighborCell> _targetMap;
 
-	public CellLinkFactory(HashMap<Point, NeighborCell> neighborsMap) {
+	public CellLinkFactory(HashMap<Pos, NeighborCell> neighborsMap) {
 		_targetMap = neighborsMap;
 	}
 
 	public ILivingCell newLink(int x, int y) {
-		Point p = new Point(x,y);
+		Pos p = new Pos(x,y);
 		
 		if (!(_targetMap.containsKey(p))){
 			NeighborCell cell = new NeighborCell(x, y);
@@ -27,7 +27,7 @@ public class CellLinkFactory {
 		return _targetMap.get(p);
 	}
 
-	public ILivingCell newLink(Point p) {
+	public ILivingCell newLink(Pos p) {
 		if (!(_targetMap.containsKey(p))){
 			NeighborCell cell = new NeighborCell(p);
 			_targetMap.put(p, cell); 
