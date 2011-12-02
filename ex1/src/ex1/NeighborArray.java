@@ -13,7 +13,11 @@ public class NeighborArray<T> implements Iterable<T>{
 		_map = new EnumMap<Directions,T>(Directions.class);
 		_set = new HashSet<T>();
 	}
-	
+	/**
+	 * 
+	 * @param dir
+	 * @param value
+	 */
 	public void put(Directions dir, T value){
 		_map.put(dir, value);
 		_set.add(value);

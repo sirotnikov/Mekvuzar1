@@ -66,8 +66,10 @@ public class Section {
 		_nearbySections.put(dir, section);
 	}
 
-
-
+	/**
+	 * 
+	 * @throws CellException
+	 */
 	public void Solve() throws CellException {
 		initCellsNeighborSections();		
 		initNeighborCells();
@@ -77,16 +79,13 @@ public class Section {
 
 			if (!_cellsActive.isEmpty()){
 				continue;	
-			}
-			
+			}			
 			if (_cellsStuck.isEmpty()){
 				break;	//no more active or stuck cells? - we're done!
 			}
 			
 			//Read up on updates
-			//if (!_nearbySections.isEmpty()){
 			readActions();
-			//}
 			
 			//Switch
 			LinkedList<ActualCell> oldEmptyActive = _cellsActive;
@@ -110,7 +109,7 @@ public class Section {
 		}
 	}
 	
-	/**
+	/** 
 	 * @throws CellException
 	 */
 	private void walkOverActiveCells() throws CellException{
