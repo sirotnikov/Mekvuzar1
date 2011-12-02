@@ -1,25 +1,21 @@
 package ex1;
 
-import java.util.LinkedList;
+import java.util.HashSet;
 
 public class ActualCell implements ILivingCell, IPoint {
 	final CellImpl _cell;
-	NeighborArray<ILivingCell> _nearbyCellsLink;
-	NeighborArray<Section> _sectionsToUpdate;
-	LinkedList<ActualCell> _activeList;
-	LinkedList<ActualCell> _stuckList;
+	NeighborArray<ILivingCell> _cellsToReadFrom;
+	HashSet<Section> _sectionsToUpdate;
+	boolean _hasSectionsToUpdate = false;
 
-	public ActualCell(int x, int y, boolean status,
-			LinkedList<ActualCell> activelist, LinkedList<ActualCell> stuckList) {
+	public ActualCell(int x, int y, boolean status) {
 		_cell = new CellImpl(x, y);
 		try {
 			_cell.update(0, status);
 		} catch (CellException e) {
 		}
-		_nearbyCellsLink = new NeighborArray<ILivingCell>();
-		_sectionsToUpdate = new NeighborArray<Section>();
-		_activeList = activelist;
-		_stuckList = stuckList;
+		_cellsToReadFrom = new NeighborArray<ILivingCell>();
+		_sectionsToUpdate = new HashSet<Section>();
 	}
 
 	@Override
@@ -27,60 +23,66 @@ public class ActualCell implements ILivingCell, IPoint {
 		return _cell.getStatus(generation);
 	}
 
+	@Override
+	public String toString() {
+		return _cell.toString();
+	}
 	public void setNeighbor(Directions dir, ILivingCell cell) {
-		_nearbyCellsLink.put(dir, cell);
+		_cellsToReadFrom.put(dir, cell);
 	}
 	
-	public void setNeighborSection(Directions dir, Section sec){
-		_sectionsToUpdate.put(dir,sec);
+	public void addSectionToUpdate(Section sec){
+		_hasSectionsToUpdate = true;
+		_sectionsToUpdate.add(sec);
 	}
 
-	public void attemptAdvancing() throws CellException {
+	public int attemptAdvancing() throws CellException {
 		int myGeneration = _cell.getGeneration();
 		boolean alive = _cell.getStatus(myGeneration);
 
 		int sumLiving = 0;
-		try {
-			for (ILivingCell cell : _nearbyCellsLink) {
-				if (cell.getStatus(myGeneration))
-					sumLiving++;
-			}						
-		} catch (NotYetReadyException e) {
-			
-			
-			
-			/*
-			 * TODO:
-			 * if action list empty
-			 *     goto waiting
-			 *     return null
-			 * else /?
-			 * 		read messages 
-			 * 		attemptAdvancing()
-			 * 		return; //se we don't advance twice!
-			 */
-			
-		} 
-		
-		advanceNextGeneration(alive, sumLiving);
+		for (ILivingCell cell : _cellsToReadFrom) {			
+			if (cell.getStatus(myGeneration))
+				sumLiving++;
+		}								
+		return advanceNextGeneration(alive, sumLiving);
 	}
 
 	/**
 	 * @param alive
 	 * @param sumLiving
 	 */
-	private void advanceNextGeneration(boolean alive, int sumLiving) {
+	private int advanceNextGeneration(boolean alive, int sumLiving) {
+		int newGeneration = -1;
 		if (stayAliveConditions(alive, sumLiving)
 				|| getBornConditions(alive, sumLiving)){
-			_cell.advance(true);
+			newGeneration = _cell.advance(true);
 		} else {
-			_cell.advance(false);
+			newGeneration = _cell.advance(false);
 		}
+
+		updateNeighborSections();
+		return newGeneration;
+	}
+	
+	public int getGeneration(){
+		return _cell.getGeneration();
+	}
+
+	/**
+	 * 
+	 */
+	public void updateNeighborSections() {
 		
-		/*
-		 * if (borderCell)
-		 * 		updateNeighbors?
-		 */
+		if (_hasSectionsToUpdate){
+			for(Section sec : _sectionsToUpdate){
+				Action a = new Action(_cell);
+				sec.pushAction(a);
+			}
+			//System.out.println(Thread.currentThread() + " updated:" +
+			//_sectionsToUpdate + "with gen " + _cell.getGeneration());
+			
+		} 
 	}
 
 	/**
@@ -110,5 +112,4 @@ public class ActualCell implements ILivingCell, IPoint {
 	public int getY() {
 		return _cell.getY();
 	}
-
 }
