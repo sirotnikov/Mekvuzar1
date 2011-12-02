@@ -25,6 +25,11 @@ class Action{
 		}
 	}
 	
+	@Override
+	public String toString() {
+		return new String("<"+ _position + "," + _gen + "," + _value +">");
+	}
+	
 	public int getGen(){return _gen;};
 	public Point getPos(){return _position;};
 	public boolean getVal(){return _value;};
