@@ -23,7 +23,6 @@ public class Section {
 	LinkedList<ActualCell> _cellsStuck;
 
 	CellLinkFactory _linkMaker;
-	ActualCellFactory _cellMaker;
 
 	int _width;
 	int _height;
@@ -52,8 +51,6 @@ public class Section {
 		_cellsActive = new LinkedList<ActualCell>();
 		_cellsStuck = new LinkedList<ActualCell>();
 		_actions = new SyncQueue<Action>();
-		_cellMaker = new ActualCellFactory(initalBoard, _cellsActive,
-				_cellsStuck, _actions);
 
 		_nearbySections = new NeighborArray<Section>();
 
@@ -159,7 +156,8 @@ public class Section {
 		for (int y = _yOffset; y < _yOffset + _height; y++){
 			for (int x = _xOffset; x < _xOffset + _width; x++) {
 				Point p = new Point(x, y);
-				ActualCell cell = _cellMaker.makeActualCell(x, y);
+				ActualCell cell = 
+						new ActualCell(x, y, initalBoard[y][x]);
 				_cellsMap.put(p, cell);
 				_cellsActive.add(cell);
 			}

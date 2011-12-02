@@ -3,6 +3,7 @@ package ex1;
 public class Point implements IPoint {
 	 final int _x;
 	 final int _y;
+	 public static int _rowLength;
 	
 	Point(int x, int y){
 		if (x < 0 || y < 0)
@@ -11,6 +12,10 @@ public class Point implements IPoint {
 		_y = y;
 	}
 
+	@Override
+	public String toString() {
+		return new String("(" + _x + "," + _y + ")");
+	}
 	public int getX(){
 		return _x;
 	}
@@ -21,7 +26,7 @@ public class Point implements IPoint {
 	
 	@Override
 	public int hashCode() {
-		return (_y * ParallelBoard._boardWidth) + _x;
+		return (_y * _rowLength) + _x;
 	}
 	
 	@Override
