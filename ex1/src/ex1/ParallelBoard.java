@@ -11,57 +11,52 @@ public class ParallelBoard {
 	Section[][] _sectionsArray; // Should eventually be
 								// Section[_vSections][_hSections];
 
-	public static int _hSections;
-	public static int _vSections;
-	public static int _boardWidth;
-	public static int _boardHeight;
-	public static int _generations;
-
-	public static int getBoardWidth() {
-		return _boardWidth;
-	}
+	int _hSections;
+	int _vSections;
+	int _boardWidth;
+	int _boardHeight;
+	int _generations;
 
 	ParallelBoard(int boardHeight, int boardWidth, int hSections,
 			int vSections, boolean initalBoard[][], int generations) {
-
-		_sectionsArray = new Section[hSections][vSections];
+		
 		_boardHeight = boardHeight;
 		_boardWidth = boardWidth;
 		_hSections = hSections;
 		_vSections = vSections;
 		_generations = generations;
+		Point._rowLength = _boardWidth;
 
-		int normalSecHgtSize = _boardHeight / _hSections;
-		int normalSecWdtSize = _boardWidth / _vSections;
-		int lastSecHgtExtra = _boardHeight % _hSections;
-		int lastSecWdtExtra = _boardWidth % _vSections;
-
-		initSections(initalBoard, normalSecHgtSize, normalSecWdtSize,
-				lastSecHgtExtra, lastSecWdtExtra);
-
+		_sectionsArray = new Section[_vSections][_hSections];
+		initSections(initalBoard);
 		initSectionNeighbors();
-
 	}
 
 	/**
+	 * 
 	 * @param initalBoard
-	 * @param normalSecHgtSize
-	 * @param normalSecWdtSize
-	 * @param lastSecHgtExtra
-	 * @param lastSecWdtExtra
+	 * @param generations
 	 */
-	private void initSections(boolean[][] initalBoard, int normalSecHgtSize,
-			int normalSecWdtSize, int lastSecHgtExtra, int lastSecWdtExtra) {
+	private void initSections(boolean[][] initalBoard) {
+		
+		int normalSecHgtSize = _boardHeight / _vSections;
+		int normalSecWdtSize = _boardWidth / _hSections;
+		int lastSecHgtExtra = _boardHeight % _vSections;
+		int lastSecWdtExtra = _boardWidth % _hSections;
 		
 		for (int i = 0; i < _hSections; i++) {
 			for (int j = 0; j < _vSections; j++) {
+				
+				int thisWidth = normalSecWdtSize
+						+ ((i == _vSections - 1) ? lastSecWdtExtra : 0);
+				int thisHeight = normalSecHgtSize
+						+ ((i == _hSections - 1) ? lastSecHgtExtra : 0);
+				int xOffset = i * normalSecWdtSize;
+				int yOffset = j * normalSecHgtSize;
+				
 				_sectionsArray[j][i] = new Section(
-						normalSecHgtSize
-								+ ((i == _hSections - 1) ? lastSecHgtExtra : 0),
-						normalSecWdtSize
-								+ ((i == _vSections - 1) ? lastSecWdtExtra : 0),
-						i * normalSecWdtSize, j * normalSecHgtSize,
-						_boardHeight, _boardWidth, initalBoard);
+						thisHeight,	thisWidth, xOffset, yOffset,
+						_boardHeight, _boardWidth, initalBoard, _generations);
 			}
 		}
 		
@@ -74,64 +69,106 @@ public class ParallelBoard {
 		
 		for (int i = 0; i < _hSections; i++) {
 			for (int j = 0; j < _vSections; j++) {
-
-				if (j > 0 && i > 0) {
-					_sectionsArray[j][i].setNeighbor(Directions.NORTH_WEST,
-							_sectionsArray[j - 1][i - 1]);
-				}
-
-				if (j > 0) {
-					_sectionsArray[j][i].setNeighbor(Directions.NORTH,
-							_sectionsArray[j - 1][i]);
-				}
-
-				if (j > 0 && i < _hSections - 1) {
-					_sectionsArray[j][i].setNeighbor(Directions.NORTH_EAST,
-							_sectionsArray[j - 1][i + 1]);
-				}
-
-				if (i > 0) {
-					_sectionsArray[j][i].setNeighbor(Directions.WEST,
-							_sectionsArray[j][i - 1]);
-				}
-
-				if (i < _hSections - 1) {
-					_sectionsArray[j][i].setNeighbor(Directions.EAST,
-							_sectionsArray[j][i + 1]);
-				}
-
-				if (j < _vSections - 1 && i < _hSections - 1) {
-					_sectionsArray[j][i].setNeighbor(Directions.SOUTH_EAST,
-							_sectionsArray[j + 1][i + 1]);
-				}
-
-				if (j < _vSections - 1) {
-					_sectionsArray[j][i].setNeighbor(Directions.SOUTH,
-							_sectionsArray[j + 1][i]);
-				}
-
-				if (j < _vSections - 1 && i > 0) {
-					_sectionsArray[j][i].setNeighbor(Directions.SOUTH_WEST,
-							_sectionsArray[j + 1][i - 1]);
-				}
-
+				initNeighborsForSect(i, j);
 			}
 		}
 	}
 
 	/**
-	 * TODO: Add a new class which inherits Threads Each such thread will be
-	 * constructed with a ptr to a Section And will do "section.solve();"
+	 * @param i
+	 * @param j
 	 */
+	private void initNeighborsForSect(int i, int j) {
+		if (j > 0 && i > 0) {
+			setNeighbor(i, j, Directions.NORTH_WEST);
+		}
+
+		if (j > 0) {
+			setNeighbor(i, j, Directions.NORTH);
+		}
+
+		if (j > 0 && (i < (_hSections - 1))) {
+			setNeighbor(i, j, Directions.NORTH_EAST);
+		}
+
+		if (i > 0) {
+			setNeighbor(i, j, Directions.WEST);
+		}
+
+		if (i < (_hSections - 1)) {
+			setNeighbor(i, j, Directions.EAST);
+		}
+
+		if ((j < (_vSections - 1)) && (i < (_hSections - 1))) {
+			setNeighbor(i, j, Directions.SOUTH_EAST);
+		}
+
+		if (j < _vSections - 1) {
+			setNeighbor(i, j, Directions.SOUTH);
+		}
+
+		if ((j < _vSections - 1) && i > 0) {
+			setNeighbor(i, j, Directions.SOUTH_WEST);
+		}
+	}
+
+	/**
+	 * @param i
+	 * @param j
+	 * @param dir
+	 */
+	private void setNeighbor(int i, int j, Directions dir) {
+		_sectionsArray[j][i].setNeighbor(dir,
+				_sectionsArray[dir.newY(j)][dir.newX(i)]);
+	}
+
+	
+	/**
+	 * @throws Exception 
+	 */
+	public boolean[][] getResults() throws Exception{
+		boolean[][] result = new boolean[_boardHeight][];
+		for (int j = 0; j < _boardHeight; j++){
+			result[j] = new boolean[_boardWidth];
+		}
+		
+		for(int j = 0; j < _vSections; j++){
+			for(int i = 0; i < _hSections; i++){
+				_sectionsArray[j][i].updateResultBoard(result);
+			}
+		}	
+		return result;
+	}
 
 	/**
 	 * 
-	 * @param sourceBoard
-	 * @param targetBoard
-	 * @return
 	 */
-
-	public boolean sectionCopy(CellImpl sourceBoard, CellImpl targetBoard[][]) {
-		return true;
+	public void Solve() {
+		SectionThread[][] threads = new SectionThread[_vSections][];
+		
+		
+		//Run threads and start them
+		for(int j = 0; j < _vSections; j++){
+			threads[j] = new SectionThread[_hSections];
+			for (int i = 0; i < _hSections; i++){
+				Section s = _sectionsArray[j][i];
+				threads[j][i] = new SectionThread(s);
+				threads[j][i].start();
+			}
+		}
+		
+		//Join threads
+		for(int j = 0; j < _vSections; j++){		
+			for (int i = 0; i < _hSections; i++){
+				try {
+					threads[j][i].join();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				
+			}
+		}
+		//Done.
+		
 	}
 }
