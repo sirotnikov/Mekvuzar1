@@ -8,9 +8,7 @@ package ex1;
  * 
  */
 public class ParallelBoard {
-	Section[][] _sectionsArray; // Should eventually be
-								// Section[_vSections][_hSections];
-
+	Section[][] _sectionsArray; 
 	int _hSections;
 	int _vSections;
 	int _boardWidth;
@@ -46,9 +44,6 @@ public class ParallelBoard {
 		int lastSecHgtExtra = _boardHeight % _vSections;
 		int lastSecWdtExtra = _boardWidth % _hSections;
 		
-		
-//		System.out.println("initSections: normal: (" 
-//				+ normalSecWdtSize + "x" + normalSecHgtSize + ")" );
 		for (int j = 0; j < _vSections; j++) {
 			for (int i = 0; i < _hSections; i++) {
 				
@@ -128,24 +123,6 @@ public class ParallelBoard {
 				_sectionsArray[dir.newY(j)][dir.newX(i)]);
 	}
 
-	
-	/**
-	 * @throws Exception 
-	 */
-	public boolean[][] getResults() throws Exception{
-		boolean[][] result = new boolean[_boardHeight][];
-		for (int j = 0; j < _boardHeight; j++){
-			result[j] = new boolean[_boardWidth];
-		}
-		
-		for(int j = 0; j < _vSections; j++){
-			for(int i = 0; i < _hSections; i++){
-				_sectionsArray[j][i].updateResultBoard(result);
-			}
-		}	
-		return result;
-	}
-
 	/**
 	 * 
 	 */
@@ -176,4 +153,23 @@ public class ParallelBoard {
 		//Done.
 		
 	}
+	
+	/**
+	 * @throws Exception 
+	 */
+	public boolean[][] getResults() throws Exception{
+		boolean[][] result = new boolean[_boardHeight][];
+		for (int j = 0; j < _boardHeight; j++){
+			result[j] = new boolean[_boardWidth];
+		}
+		
+		for(int j = 0; j < _vSections; j++){
+			for(int i = 0; i < _hSections; i++){
+				_sectionsArray[j][i].updateResultBoard(result);
+			}
+		}	
+		return result;
+	}
 }
+
+
