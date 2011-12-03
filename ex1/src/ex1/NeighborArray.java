@@ -23,6 +23,16 @@ public class NeighborArray<T> implements Iterable<T>{
 		_set.add(value);
 	}
 	
+	
+	@Override
+	public String toString() {
+		return _set.toString();
+	}
+	/**
+	 * 
+	 * @param dir
+	 * @return
+	 */
 	public T get(Directions dir){
 		return _map.get(dir);
 	}

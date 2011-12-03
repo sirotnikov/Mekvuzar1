@@ -53,15 +53,17 @@ public class Section {
 		_actions = new SyncQueue<Action>();
 
 		_nearbySections = new NeighborArray<Section>();
-
 		initCells(initalBoard);
+		//System.out.print(this);
 	}
 
 	@Override
 	public String toString() {
-		return new String("[" + _xOffset + "," + _yOffset + "]");
+		return new String("[S:" + _xOffset + "-" + ( _xOffset + _width) + 
+				"," + _yOffset + "-" + ( _yOffset + _height) + "]");
 	}
 	public void setNeighbor(Directions dir, Section section) {
+		//System.out.println(this + " adding neighbor " + section + " to " + _nearbySections);
 		_nearbySections.put(dir, section);
 	}
 

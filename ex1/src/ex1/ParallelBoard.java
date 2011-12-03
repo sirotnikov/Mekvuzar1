@@ -28,6 +28,8 @@ public class ParallelBoard {
 		Point._rowLength = _boardWidth;
 
 		_sectionsArray = new Section[_vSections][_hSections];
+		
+		//System.out.println("Board: [" + _hSections + "," + _vSections + "]");
 		initSections(initalBoard);
 		initSectionNeighbors();
 	}
@@ -44,13 +46,16 @@ public class ParallelBoard {
 		int lastSecHgtExtra = _boardHeight % _vSections;
 		int lastSecWdtExtra = _boardWidth % _hSections;
 		
-		for (int i = 0; i < _hSections; i++) {
-			for (int j = 0; j < _vSections; j++) {
+		
+//		System.out.println("initSections: normal: (" 
+//				+ normalSecWdtSize + "x" + normalSecHgtSize + ")" );
+		for (int j = 0; j < _vSections; j++) {
+			for (int i = 0; i < _hSections; i++) {
 				
 				int thisWidth = normalSecWdtSize
-						+ ((i == _vSections - 1) ? lastSecWdtExtra : 0);
+						+ ((i == _hSections - 1) ? lastSecWdtExtra : 0);
 				int thisHeight = normalSecHgtSize
-						+ ((i == _hSections - 1) ? lastSecHgtExtra : 0);
+						+ ((j == _vSections - 1) ? lastSecHgtExtra : 0);
 				int xOffset = i * normalSecWdtSize;
 				int yOffset = j * normalSecHgtSize;
 				
@@ -58,8 +63,9 @@ public class ParallelBoard {
 						thisHeight,	thisWidth, xOffset, yOffset,
 						_boardHeight, _boardWidth, initalBoard, _generations);
 			}
+			//System.out.println();
 		}
-		
+		//System.out.println("All sections done");
 	}
 
 	/**
@@ -145,7 +151,6 @@ public class ParallelBoard {
 	 */
 	public void Solve() {
 		SectionThread[][] threads = new SectionThread[_vSections][];
-		
 		
 		//Run threads and start them
 		for(int j = 0; j < _vSections; j++){
