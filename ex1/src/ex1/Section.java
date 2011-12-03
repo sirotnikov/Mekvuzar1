@@ -13,8 +13,8 @@ import java.util.ListIterator;
  */
 public class Section {
 
-	HashMap<Pos, ActualCell> _cellsMap;
-	HashMap<Pos, NeighborCell> _neighborCellCache;
+	HashMap<Point, ActualCell> _cellsMap;
+	HashMap<Point, NeighborCell> _neighborCellCache;
 
 	SyncQueue<Action> _actions;
 	NeighborArray<Section> _nearbySections;
@@ -44,8 +44,8 @@ public class Section {
 		_totalBoardWidth = boardWidth;
 		_finalGeneration = generations;
 
-		_cellsMap = new HashMap<Pos, ActualCell>();
-		_neighborCellCache = new HashMap<Pos, NeighborCell>();
+		_cellsMap = new HashMap<Point, ActualCell>();
+		_neighborCellCache = new HashMap<Point, NeighborCell>();
 		_linkMaker = new CellLinkFactory(_neighborCellCache);
 
 		_cellsActive = new LinkedList<ActualCell>();
@@ -55,7 +55,6 @@ public class Section {
 		_nearbySections = new NeighborArray<Section>();
 
 		initCells(initalBoard);
-
 	}
 
 	@Override
@@ -71,7 +70,7 @@ public class Section {
 	 * @throws CellException
 	 */
 	public void Solve() throws CellException {
-		initCellsNeighborSections();		
+		initCellsNeighborSections();
 		initNeighborCells();
 		
 		while (!_cellsActive.isEmpty()) {		
@@ -154,7 +153,7 @@ public class Section {
 
 		for (int y = _yOffset; y < _yOffset + _height; y++){
 			for (int x = _xOffset; x < _xOffset + _width; x++) {
-				Pos p = new Pos(x, y);
+				Point p = new Point(x, y);
 				ActualCell cell = 
 						new ActualCell(x, y, initalBoard[y][x]);
 				_cellsMap.put(p, cell);
@@ -285,7 +284,7 @@ public class Section {
 		
 		boolean newPisInBoard = checkWithinBoundries(newX, newY);
 
-		Pos p = new Pos(newX, newY);
+		Point p = new Point(newX, newY);
 		ILivingCell neighbor = (newPisInBoard) ? _cellsMap.get(p) :
 			_linkMaker.newLink(p);
 		

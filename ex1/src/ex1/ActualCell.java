@@ -119,7 +119,7 @@ public class ActualCell implements ILivingCell, IPoint {
 	public void updateNeighborSections() {
 		
 		if (_hasSectionsToUpdate){
-			for(Section sec : _sectionsToUpdate){
+			for(Section sec :  _sectionsToUpdate){
 				Action a = new Action(_cell);
 				sec.pushAction(a);
 			}

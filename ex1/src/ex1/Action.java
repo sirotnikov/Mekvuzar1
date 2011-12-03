@@ -7,7 +7,7 @@ package ex1;
  *
  */
 class Action{
-	private Pos _position;
+	private Point _position;
 	private int _gen;
 	private boolean _value;
 	/**
@@ -16,7 +16,7 @@ class Action{
 	 * @param newVal
 	 * @param newPos
 	 */
-	public Action(int newGen,boolean newVal,Pos newPos){
+	public Action(int newGen,boolean newVal,Point newPos){
 		_gen = newGen;
 		_value = newVal;
 		_position = newPos;
@@ -24,7 +24,7 @@ class Action{
 	
 	public Action(CellImpl cell){
 		try {	//because of getStatus
-			_position = new Pos(cell.getX(), cell.getY());
+			_position = new Point(cell.getX(), cell.getY());
 			_gen = cell.getGeneration();
 			_value = cell.getStatus(_gen);
 		} catch (CellException e) {
@@ -37,6 +37,6 @@ class Action{
 	}
 	
 	public int getGen(){return _gen;};
-	public Pos getPos(){return _position;};
+	public Point getPos(){return _position;};
 	public boolean getVal(){return _value;};
 }
